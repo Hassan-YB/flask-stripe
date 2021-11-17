@@ -1,0 +1,31 @@
+<style>
+    @font-face {
+      font-family: "BrandonGrotesqueRegular";
+      src: url("static/css/Brandonreg.eot"); /* IE9 Compat Modes */
+      src: url("static/css/Brandonreg.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+        url("static/css/Brandonreg.otf") format("opentype"), /* Open Type Font */
+        url("static/css/Brandonreg.svg") format("svg"), /* Legacy iOS */
+        url("static/css/Brandonreg.ttf") format("truetype"), /* Safari, Android, iOS */
+        url("static/css/Brandonreg.woff") format("woff"), /* Modern Browsers */
+        url("static/css/Brandonreg.woff2") format("woff2"); /* Modern Browsers */
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: "BrandonGrotesqueRegular";
+    }
+</style>
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }}</title>
+      {% else %}
+      <title>Welcome to Tepilora</title>
+      {% endif %}
+    </head>
+    <body>
+        <div>HOME: <a href="{{ url_for('home') }}">Home</a></div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>

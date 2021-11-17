@@ -1,0 +1,372 @@
+{% extends "baseTemplate.html" %}
+{% block title %}Tepilora{% endblock %}
+{% block titlebar %}Tepilora{% endblock %}
+{% block content %}
+
+        <div class="doc-wrapper">
+            <div class="container">
+                <div id="doc-header" class="doc-header text-center">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h1 class="doc-title text-secondary text-center"><i class="icon fa fa-book" style="color:gray"></i>API Documentation, full guide</h1>
+                    <div class="meta"><i class="far fa-clock"></i> Last updated: August 20th, 2020</div>
+                </div><!--//doc-header-->
+                <div class="doc-body row">
+                    <div class="doc-content col-md-9 col-12 order-1">
+                        <div class="content-inner">
+                            <section id="download-section" class="doc-section">
+                                <h2 class="section-title">API Documentation</h2>
+                                <hr/>
+                                <div class="section-block">
+                                    <p>Welcome to the Tepilora API documentation! In the following series of articles you will learn how to query the Tepilora JSON/CSV API for EOD and historical market data, retrieve extensive data of about 125.000+ Funds from more than 50 countries, as well as information about timezones, currencies, and more. Our API is built upon a RESTful and easy-to-understand request and response structure. API requests are always sent using a simple API request URL with a series of required and optional HTTP GET parameters, and API responses are provided in both JSON and CSV format. Continue below to get started.
+                                    </p>
+                                    <!--
+                                    <a href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/prettydocs-free-bootstrap-theme-for-developers-and-startups/" class="btn btn-green" target="_blank"><i class="fas fa-download"></i> Download PrettyDocs</a>
+                                    -->
+                                </div>
+                            </section><!--//doc-section-->
+                            <br/>
+                            <section id="gettingstarted-section" class="doc-section">
+                                <h2 class="section-title">API authentication and authorization</h2>
+                                <hr/>
+                                <br/>
+                                <div id="api-authentication"  class="section-block">
+                                    <h4 class="block-title">API Authentication</h4>
+                                    <hr/>
+                                    <p>For every API request you make, you will need to make sure to be authenticated with the API by passing your API access key to the API's apikey parameter. You can find an example below.
+                                    </p>
+
+                                    <div class="code-block">
+                                        <h6>Example API request:</h6>
+                                        <pre> <code class="language-markup">https://tepiloradata.com//T-Api/S/LU1829219556/CSV
+                                            ? apikey=YOUR_API_KEY
+                                            </code> 
+                                        </pre>
+                                        <p><strong>Important:</strong> Please make sure not to expose your API access key publicly. If you believe your API access key may be compromised, you can always ask to reset to <a class="text-primary" href="mailto:admin@tepiloradata.com">admin@tepiloradata.com</a>
+                                        </p>
+                                    </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                <br/>
+                                <div id="api-authorization"  class="section-block">
+                                    <h4 class="block-title">API Authorization</h4>
+                                    <hr/>
+                                    <p>Tepilora offers multiple subscription levels (Free, Bronze, Silver, Custom, etc.). Standard subscription is available via RapidAPI, for a custom subscription please contact <a class="text-primary" href="mailto:admin@tepiloradata.com">admin@tepiloradata.com</a>, multiple options are availabe and we will accomodate your request based on your needs.
+                                    Depending on the subscription, a key is generated and used to grant access to any of the API.
+                                    </p>
+                                </div>
+                            </section>
+                            </br>
+                            <section id="error-section" class="doc-section">
+                                <h2 class="section-title">API Error handling</h2>
+                                <hr/>
+                                <br/>
+                                <div id="api-errors"  class="section-block">
+                                    <h4 class="block-title">API Errors</h4>
+                                    <hr/>
+                                    <p>API errors consist of error code and message response objects. If an error occurs, the Tepilora will also return HTTP status codes, such as 404 for "not found" errors. If your API request succeeds, status code 200 will be sent.
+For validation errors, the Tepilora API will also provide a context response object returning additional information about the error that occurred in the form of a string message. You can find an example error below.
+                                    </p>
+                                    
+                                    <div class="code-block">
+                                        <h6>Example error:</h6>
+                                        <pre> <code class="language-css">{
+                "error": {
+                        "code": 300,
+                        "message": "search did not return any record",
+                        "context": {
+                                "symbols": [
+                                    {
+                                        "key": "_no_record_",
+                                        "message": "search did not return any record"
+                                    }
+                                ]
+                        }
+                }
+            }
+                                            </code> 
+                                        </pre>
+                                    </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                </br>
+                                <div class="section-block">
+                                    <h6><strong>Common API errors</strong></h6>
+                                    <div class="table-responsive">
+                                        <table class="table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-nowrap">Err Code</th>
+                                                    <th class="text-center">Error key</th>
+                                                    <th class="text-center">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-danger text-center">304</td>
+                                                    <td class="text-danger text-left"> _no_security_ </td>
+                                                    <td class="text-justify">API was not able to find any match in our DB based on your search parameters</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-danger text-center">303</td>
+                                                    <td class="text-danger text-left"> _internal_error_ </td>
+                                                    <td class="text-justify">A very generic error that can occur because an exception occured while processing your request. In order to ease debugging, please provide to the administrator also the full http request for troubleshooting </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-danger text-center">300</td>
+                                                    <td class="text-danger text-left"> _no_record_ </td>
+                                                    <td class="text-justify">API was not able to find any match in our DB based on your search parameters</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                            </section>
+                            <br/>
+                            <section id="apifeatures-section" class="doc-section">
+                                <h2 class="section-title">API features</h2>
+                                <hr/>
+                                <div class="section-block">
+                                    <p>Follows a documentation of APIs currently available. Please check regurarly this page as more and more APIs will come, to cover any of the financial aspects required by a european investor.</p>
+                                </div>
+                                <br/>
+                                <div id="sec-description"  class="section-block">
+                                    <h4 class="block-title">API Security description, full name match is required</h4>
+                                    <hr/>
+                                    <p>It provisions a detailed description of a selected security among 120+K european securities.</p>
+                                    <h6><strong>Endpoint features:</strong></h6>
+                                    <div class="table-responsive">
+                                        <table class="table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-nowrap">Object</th>
+                                                    <th class="text-left">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-danger text-left">D/[IsinOrFundName]/[Output]</td>
+                                                    <td class="text-left">it fetches all the info related to Isin Code or name of a Fund. If no matches are found, then a _no_record_found_ error is returned. If more than one match is found an error is returned.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                    <br/>
+                                    <h6><strong>HTTP GET Request Parameters:</strong></h6>
+                                    <div class="table-responsive">
+                                        <table class="table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-nowrap">Object</th>
+                                                    <th class="text-left">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-danger text-left">IsinOrFundName</td>
+                                                    <td class="text-left">IsinCode or name of fund you are looking for. A full match is required, no wildcards</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-danger text-left">Format</td>
+                                                    <td class="text-left">it is the format required by client for processing data. Values allowed are CSV or JSON.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                    <div class="code-block">
+                                        </br>
+                                        <h6>Example of response in JSON format:</h6>
+                                        <pre> <code class="language-css">
+{
+    "IsinCode": "FR0010655720",
+    "Name": "Amundi ETF MSCI Italy UCITS ETF",
+    "Data": {
+      "InceptionDate": "2008-09-16T00:00:00",
+      "IsinCode": "FR0010655720",
+      "Replication": "Synthetic Replication",
+      "CompanyName": "Amundi Asset Management",
+      "Exchange": "EX$$$$XPAR",
+      "ShortName": "Amundi ETF MSCI Italy A/I",
+      "Name": "Amundi ETF MSCI Italy UCITS ETF",
+      "UCITS": "true",
+      "TotalAssetCurrency": "EUR",
+      "TotalAssetDate": "2020-07-29T00:00:00",
+      "TotalAssetValue": 6833991.0,
+      "Domicile": "FRA",
+      "OngoingFees": "0.25",
+      "ListingCurrency": "EUR",
+      "Currency": "EUR",
+      "LegalStructure": "FCP",
+      "InvestmentObjective": "The fund’s objective is to track as closely as possible the MSCI Italy index (see section “Benchmark index”), whether the MSCI Italy index rises or falls.\r\nThe fund is managed so as to achieve a gap between changes in its NAV and changes in the value of the MSCI Italy index (referred to below as the “MSCI Italy Index”) as small as possible. The target for maximum tracking error between changes in the Fund’s NAV and those in the MSCI Italy Index is 2%. If the “tracking error” exceeds 2%, the aim would nevertheless be to remain below 10% of the volatility shown by the MSCI Italy Index.",
+      "TER": 0.25,
+      "MgmtFees": 0.25,
+      "CompanyAddress": "90, boulevard Pasteur",
+      "CompanyCountry": "France",
+      "Benchmark": [
+        {
+          "Name": "MSCI Italy NR EUR",
+          "Weight": 100.0
+        }
+      ],
+      "DateofLastUpdate": "2020-07-31 12:30:53.440000",
+      "TepiloraType": "ETF"
+    },
+    "TepiloraCode": "FR0010655720EURXPAR"
+  }                                            </code> 
+                                        </pre>
+                                    </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                <br/>
+                                    
+                                <div id="sec-description"  class="section-block">
+                                    <h4 class="block-title">API Search of info for a security</h4>
+                                    <hr/>
+                                    <p>It provisions a detailed description of all securites matching the filter criteria specified in the parameters.</p>
+                                    <h6><strong>Endpoint features:</strong></h6>
+                                    <div class="table-responsive">
+                                        <table class="table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-nowrap">Object</th>
+                                                    <th class="text-left">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-danger text-left">S/[SearchKey]/[Output]</td>
+                                                    <td class="text-left">it fetches all the info related to search key. It will search for all the records containing fund name or an IsinCode matching partially the search key. If no matches are found, then a _no_record_found_ error is returned. If more than 100 matches are found an error is displayed in the resultset.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                    <h6><strong>HTTP GET Request Parameters:</strong></h6>
+                                    <div class="table-responsive">
+                                        <table class="table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-nowrap">Object</th>
+                                                    <th class="text-left">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-danger text-left">SearchKey</td>
+                                                    <td class="text-left">IsinCode or name of fund you are looking for. No full match is required, wildcards are not allowed anyway</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-danger text-left">Format</td>
+                                                    <td class="text-left">it is the format required by client for processing data. Values allowed are CSV or JSON.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                    <div class="code-block">
+                                        </br>
+                                        <h6>Example of response in JSON format:</h6>
+                                        <pre> <code class="language-css">
+"The query returned 139 results. Showing the first 100, please refine your search",
+  {
+    "IsinCode": "FR0013412012",
+    "Name": "Amundi ETF PEA MSCI Emerging Asia UCITS ETF",
+    "TepiloraCode": "FR0013412012EURXPAR"
+  },
+  {
+    "IsinCode": "LU1681044480",
+    "Name": "Amundi Index Solutions - Amundi MSCI Em Asia UCITS ETF-C EUR",
+    "TepiloraCode": "LU1681044480EURXPAR"
+  },
+  {
+    "IsinCode": "LU1681044480",
+    "Name": "Amundi Index Solutions - Amundi MSCI Em Asia UCITS ETF-C EUR",
+    "TepiloraCode": "LU1681044480EURXMIL"
+  }                                            </code> 
+                                        </pre>
+                                    </div><!--//code-block-->
+                                </div><!--//section-block-->
+                                <br/>
+                                <div id="sec-description"  class="section-block">
+                                    <h4 class="block-title">API Search of info and historical data for a security</h4>
+                                    <hr/>
+                                    <p>It provisions a detailed description of a security and also historical data.</p>
+                                    <h6><strong>Endpoint features:</strong></h6>
+                                    <div class="table-responsive">
+                                        <table class="table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-nowrap">Object</th>
+                                                    <th class="text-left">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-danger text-left">H/[DataDepth]/[SearchKey]/[Output]</td>
+                                                    <td class="text-left">It will search for all the records containing fund name or an IsinCode matching partially the search key. If no matches are found, then a _no_record_found_ error is returned. If more than 100 matches are found an error is displayed in the resultset.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                    
+                                    <h6><strong>HTTP GET Request Parameters:</strong></h6>
+                                    <div class="table-responsive">
+                                        <table class="table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-nowrap">Object</th>
+                                                    <th class="text-left">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-danger text-left">DataDepth</td>
+                                                    <td class="text-left">DataDepth is the degree of header detail you want to be displayed along with history data. Set to 0 for displaying  Name, IsinCode, TepiloraCode, Currency, ListingCurrency, LastUpdate. Set to 1 for displaying Name, IsinCode and Currency. Set to 2 for displaying only the history. Default is 2.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-danger text-left">SearchKey</td>
+                                                    <td class="text-left">IsinCode or name of fund you are looking for. No full match is required, wildcards are not allowed anyway</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-danger text-left">Format</td>
+                                                    <td class="text-left">it is the format required by client for processing data. Values allowed are CSV or JSON.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                    <div class="code-block">
+                                        </br>
+                                        <h6>Example of response in JSON format:</h6>
+                                        <pre> <code class="language-css">
+ "IsinCode": "LU0229519805",
+    "LastUpdate": "2020-08-19 21:56:29.643000",
+    "ListingCurrency": "EUR",
+    "Name": "Nordea 1 - Global Stable Equity Fund E EUR",
+  "Currency": "EUR",
+    "H": [
+      [
+        "Time",
+        "Price",
+        "Dividend"
+      ],
+      [
+        "2006-01-03 00:00:00",
+        11.984,
+        null
+      ],
+      [
+        "2006-01-04 00:00:00",
+        11.954,
+        null
+      ]                                            </code> 
+                                        </pre>
+                                    </div><!--//code-block-->
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->
+                        </div><!--//content-inner-->
+                    </div><!--//doc-content-->
+                </div><!--//doc-body-->              
+            </div><!--//container-->
+        </div><!--//doc-wrapper-->
+        
+    
+    
+     
+		
+{% endblock %}  
+

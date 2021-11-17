@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TepiloraData</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/message.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script> 
+    <style>
+        @font-face {
+          font-family: "BrandonGrotesqueRegular";
+          src: url("static/css/Brandonreg.eot"); /* IE9 Compat Modes */
+          src: url("static/css/Brandonreg.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+            url("static/css/Brandonreg.otf") format("opentype"), /* Open Type Font */
+            url("static/css/Brandonreg.svg") format("svg"), /* Legacy iOS */
+            url("static/css/Brandonreg.ttf") format("truetype"), /* Safari, Android, iOS */
+            url("static/css/Brandonreg.woff") format("woff"), /* Modern Browsers */
+            url("static/css/Brandonreg.woff2") format("woff2"); /* Modern Browsers */
+          font-weight: normal;
+          font-style: normal;
+        }
+        body {
+          font-family: "BrandonGrotesqueRegular";
+        }
+    </style>
+</head>
+<body>
+    <!------ Include the above in your HEAD tag ---------->
+    
+    <!-- http://www.jquery2dotnet.com -->
+    <div class="container">
+        <div class="row">
+            {% if severity == 'ALERT' %}
+            <div class="col-sm-6 col-md-6">
+                <div class="alert alert-success">
+                    <button type="button" class="close" onclick="location.href='/'" data-dismiss="alert" aria-hidden="true">
+                        ×</button>
+                   <span class="glyphicon glyphicon-ok"></span> <strong>Alert Message</strong>
+                    <hr class="message-inner-separator">
+                    <p>
+                        {{ msgToDisplay }}</p>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if severity == 'INFO' %}
+            <div class="col-sm-6 col-md-6 text-center">
+                <div class="alert alert-info text-center">
+                    <button type="button" class="close" onclick="location.href='/'" data-dismiss="alert" aria-hidden="true">
+                        ×</button>
+                    <span class="glyphicon glyphicon-info-sign"></span> <strong>Info Message</strong>
+                    <hr class="message-inner-separator">
+                    <p>
+                        {{ msgToDisplay }}</p>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if severity == 'WARNING' %}
+            <div class="col-sm-6 col-md-6">
+                <div class="alert alert-warning">
+                    <button type="button" class="close" onclick="location.href='/'" data-dismiss="alert" aria-hidden="true">
+                        ×</button>
+                    <span class="glyphicon glyphicon-record"></span> <strong>Warning Message</strong>
+                    <hr class="message-inner-separator">
+                    <p>
+                        {{ msgToDisplay }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if severity == 'FATAL' %}
+            <div class="col-sm-6 col-md-6">
+                <div class="alert alert-danger">
+                    <button type="button" class="close" onclick="location.href='/'" data-dismiss="alert" aria-hidden="true">
+                        ×</button>
+                    <span class="glyphicon glyphicon-hand-right"></span> <strong>Fatal error</strong>
+                    <hr class="message-inner-separator">
+                    <p>
+                        {{ msgToDisplay }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>

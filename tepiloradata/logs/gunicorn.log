@@ -1,0 +1,459 @@
+{'id': 'url', 'property': 'pathname'}
+{'url.pathname': None}
+entering callback for pathname None
+[2020-08-19 09:48:16 +0200] [10800] [ERROR] Error handling request /dash-financial-report/overview
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base_async.py", line 55, in handle
+    self.handle_request(listener_name, req, client, addr)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/ggevent.py", line 143, in handle_request
+    super().handle_request(listener_name, req, sock, addr)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base_async.py", line 106, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 2450, in wsgi_app
+    response = self.handle_exception(e)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 1867, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 1953, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 1968, in finalize_request
+    response = self.make_response(rv)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 2131, in make_response
+    " {rv.__class__.__name__}.".format(rv=rv)
+TypeError: The view function did not return a valid response. The return type must be a string, dict, tuple, Response instance, or WSGI callable, but it was a Div.
+[2020-08-19 09:54:23 +0200] [10852] [ERROR] Error handling request /dash-financial-report/price-performance
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base_async.py", line 55, in handle
+    self.handle_request(listener_name, req, client, addr)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/ggevent.py", line 143, in handle_request
+    super().handle_request(listener_name, req, sock, addr)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base_async.py", line 106, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 2450, in wsgi_app
+    response = self.handle_exception(e)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 1867, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 1953, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 1968, in finalize_request
+    response = self.make_response(rv)
+  File "/home/francesco/.local/lib/python3.7/site-packages/flask/app.py", line 2098, in make_response
+    "The view function did not return a valid response. The"
+TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
+[2020-08-19 10:07:09 +0200] [11011] [ERROR] invalid syntax (utils.py, line 25)
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+[2020-08-19 10:07:09 +0200] [11011] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/ggevent.py", line 162, in init_process
+    super().init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 119, in init_process
+    self.load_wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 157, in load_wsgi
+    self.reloader.add_extra_file(exc_val.filename)
+AttributeError: 'NoneType' object has no attribute 'add_extra_file'
+[2020-08-19 10:07:32 +0200] [11038] [ERROR] invalid syntax (utils.py, line 25)
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+[2020-08-19 10:07:32 +0200] [11038] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/ggevent.py", line 162, in init_process
+    super().init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 119, in init_process
+    self.load_wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 157, in load_wsgi
+    self.reloader.add_extra_file(exc_val.filename)
+AttributeError: 'NoneType' object has no attribute 'add_extra_file'
+[2020-08-19 10:07:32 +0200] [11039] [ERROR] invalid syntax (utils.py, line 25)
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+[2020-08-19 10:07:32 +0200] [11039] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/ggevent.py", line 162, in init_process
+    super().init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 119, in init_process
+    self.load_wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 157, in load_wsgi
+    self.reloader.add_extra_file(exc_val.filename)
+AttributeError: 'NoneType' object has no attribute 'add_extra_file'
+[2020-08-19 10:07:32 +0200] [11040] [ERROR] invalid syntax (utils.py, line 25)
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+[2020-08-19 10:07:32 +0200] [11040] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/ggevent.py", line 162, in init_process
+    super().init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 119, in init_process
+    self.load_wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 157, in load_wsgi
+    self.reloader.add_extra_file(exc_val.filename)
+AttributeError: 'NoneType' object has no attribute 'add_extra_file'
+[2020-08-19 10:08:43 +0200] [11047] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/ggevent.py", line 162, in init_process
+    super().init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 119, in init_process
+    self.load_wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+[2020-08-19 10:08:43 +0200] [11048] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/ggevent.py", line 162, in init_process
+    super().init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 119, in init_process
+    self.load_wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+[2020-08-19 10:08:43 +0200] [11049] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/ggevent.py", line 162, in init_process
+    super().init_process()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 119, in init_process
+    self.load_wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/francesco/.local/lib/python3.7/site-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/wsgi.py", line 13, in <module>
+    from application import app as tepiloradata #flask_app
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/__init__.py", line 24, in <module>
+    from application.reporting.pages import (
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/pages/overview.py", line 5, in <module>
+    from application.reporting.utils import Header, make_dash_table
+  File "/home/francesco/Dropbox/Tepilora/Calcolo-Python/PythonAPI/developmentEnv/tepiloradata/application/reporting/utils.py", line 25
+    html.Div(
+       ^
+SyntaxError: invalid syntax
+
+
+
+
+{'$or': [{'Data.TepiloraCode': {'$regex': 'IE00B9M6RS56EURXLON'}}, {'Data.MorningstarCode': {'$regex': 'IE00B9M6RS56EURXLON'}}, {'Data.Name': {'$regex': 'IE00B9M6RS56EURXLON'}}]}
+
