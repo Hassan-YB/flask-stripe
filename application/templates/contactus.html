@@ -1,0 +1,73 @@
+{% extends "baseTemplate.html" %}
+{% block title %}Tepilora: Contact us{% endblock %}
+{% block titlebar %}Tepilora{% endblock %}
+{% block content %}
+
+
+    <div class="container">
+    
+        <h5>
+
+	</h5>
+	<br>
+ 	</br>      
+        <div class="card-body"><!-- px-lg-5 pt-0"-->
+    
+            <form class="md-form" style="color: #757575;" action="" method="post">
+    
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label for="materialContactFormName">Name</label>
+                        <input type="text" name="materialContactFormName" id="materialContactFormName" class="form-control">
+                    </div>
+                </div>
+                <!--
+                {% if name == null or name == '' %}
+                    <input type="text" name="materialContactFormName" id="materialContactFormName" class="form-control">
+                {% else %}
+                    <input readonly type="text" name="materialContactFormName" id="materialContactFormName" class="form-control" value={{ name }}>
+                {% endif %}
+                -->
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label for="materialContactFormEmail">E-mail</label>
+                        <input type="email" name="materialContactFormEmail" id="materialContactFormEmail" class="form-control">
+                    </div>
+                </div>
+                <!--
+                {% if email == null or email == '' %}
+                    <input type="email" name="materialContactFormEmail" id="materialContactFormEmail" class="form-control">
+                {% else %}
+                    <input readonly type="email" name="materialContactFormEmail" id="materialContactFormEmail" class="form-control" value={{ email }}>
+                {% endif %}
+                -->
+    
+                <div class="row">
+                    <div class="form-group">
+                        <label for="materialContactFormMessage">Message</label>
+                        <textarea type="text" name="materialContactFormMessage" id="materialContactFormMessage" class="form-control md-textarea" rows="3"></textarea>
+                    </div>
+                </div>
+    
+                <!-- <div class="form-check"> -->
+                <!-- <div class="row">-->
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input" name="materialContactFormCopy" id="materialContactFormCopy">
+                        <label class="form-check-label" for="materialContactFormCopy">Send me a copy of this message</label>
+                    </div>
+                <!-- </div>-->
+    
+                <div class="row">
+                    <div class="form-group">
+                        <!-- <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Send</button> -->
+                        <button class="btn btn-secondary" type="submit">Send</button>
+                    </div>
+                </div>
+    
+            </form>
+        </div>
+    </div>
+
+{% endblock %}  

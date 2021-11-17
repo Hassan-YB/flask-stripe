@@ -1,0 +1,50 @@
+{% extends "baseTemplate.html" %}
+{% block title %}Tepilora{% endblock %}
+{% block titlebar %}Tepilora: Sign Up Form{% endblock %}
+{% block content %}
+<div class="signup-form">
+    <form action="/register" method="post">
+		<h2>Sign Up</h2>
+		<hr>
+      <div class="form-group">
+          <label>Username (min 8 max 30 characters)</label>
+        	<input type="text" class="form-control" name="username" required="required">
+      </div>
+      <div class="form-group">
+			<label>Email Address</label>
+        	<input type="email" class="form-control" name="email" required="required">
+        </div>
+		<div class="form-group">
+			<label>Password (min 8 max 30 characters)</label>
+            <input type="password" class="form-control" name="password" required="required">
+		</div>
+		<div class="form-group">
+			<label>Confirm Password</label>
+            <input type="password" class="form-control" name="confirmpassword" required="required">
+		</div>
+		<!--
+		<label>Choose your plan</label>
+		<select class="browser-default custom-select mb-4" name="profile" id="profile"> -->
+			<!-- <option value="" disabled="" selected="">Choose your plan</option>-->
+			<!--
+			<option value="Free" selected="">Free</option>
+			<option value="Bronze">Bronze</option>
+			<option value="Silver">Silver</option>
+			<option value="Gold">Gold</option>
+		</select>
+		-->
+		<div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block btn-lg">Sign Up</button>
+        </div>
+		<p class="small text-center">By clicking the Sign Up button, you agree to our <br><a href="/termsandconditions">Terms &amp; Conditions</a>, and <a href="/privacy">Privacy Policy</a></p>
+		{% if error %}
+			<!--<p class="error"><strong>Error:</strong> {{ error }} -->
+			<div class="alert alert-danger">
+				<strong></strong> {{ error }}
+			</div>
+		{% endif %}
+    </form>
+	<div class="text-center">Already have an account? <a href="/login">Login here</a></div>
+</div>
+
+{% endblock %}  
