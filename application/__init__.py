@@ -105,7 +105,7 @@ logWebApp.info("Initizalized Limiter")
 # loading data into app context
 with app.app_context():
     #include routes definition
-    from application import webRoutes, stripeSubscriptions# ,login stripeRoutes,
+    from application import webRoutes, stripeSubscriptions, utilityRoutes# ,login stripeRoutes,
     from application import HTTPerrors#, apiRoutes
     
     

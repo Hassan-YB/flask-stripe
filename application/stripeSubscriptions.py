@@ -3,10 +3,10 @@ import stripe
 from flask import  jsonify, render_template, request, session, flash
 from werkzeug.utils import redirect
 from application import app, csrf, dbSQL, migrate
-import json, os
+import json, os,time, uuid
 from datetime import datetime
-import time
-import uuid
+from utilityRoutes import currentUserInfo
+ 
 #DB_NAME = "StripeDatabase.db"
 #app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
 
@@ -369,6 +369,14 @@ def user_dashboard():
             context = {}
             session['email'] = email
             context['subscription'] = Subscriptions.query.filter_by(email=email).first()
+            currentUserData= currentUserInfo
+            #pass to Stripe-Dashboard.html also currentUserData and display as meaningful info like:
+            # your apikey is ...
+            # your current plan is limited to:
+            #     daily calls = 
+            #     montly calls = 
+            # your current usage is :
+            # ...
             return render_template("Stripe-Dashboard.html",**context)
         else:
             flash('No email found!')
