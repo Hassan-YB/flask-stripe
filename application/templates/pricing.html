@@ -32,6 +32,37 @@
             <input type="email" name="email" id="email" hidden>
         </form>
 
+        {% for product in stripeListOfProductsAndPrices %}
+
+            <div class="card mb-4 box-shadow">
+              <div class="card-header">
+                <h4 class="my-0 text-primary font-weight-normal">{{ product.name }}</h4>
+              </div>
+              <div class="card-body text-body">
+                {% if product.currency == 'eur' %}
+                    <h1 class="card-title pricing-card-title">€ {{ product.price }} <small > / mo</small></h1>
+                {% else %}
+                    <h1 class="card-title pricing-card-title">$ {{ product.price }} <small > / mo</small></h1>
+                {% endif %}                
+                <ul class="list-unstyled mt-3 mb-4">
+                  {% for key in product.metadata %}
+                        {% if key[0:3] == 'des' %}
+                            <li>{{ product.metadata[key] }}</li>
+                        {% endif %}                
+                  {% endfor %}
+                </ul>
+                    <a type="button" onclick="subscribe('{{ product.priceId }}','{{ product.billingScheme }}');" role="button" class="btn btn-lg btn-block btn-primary">Get started</a>
+                  <!--
+                  {% if name == null or name == '' %}
+                    <a type="button" href="/planoffering" role="button" class="btn btn-lg btn-block btn-primary">Sign up for free</a>
+                  {% else %}
+                    <a type="button" href="/payment?payOption={{ product.id }}" role="button" class="btn btn-lg btn-block btn-primary">Get started</a>
+                  {% endif %}
+                  -->
+              </div>
+            </div>
+        {% endfor %}
+        <!--
         <div class="card mb-4 box-shadow">
           <div class="card-header">
             <h4 class="my-0 text-primary font-weight-normal">Basic Plan Grd</h4>
@@ -44,16 +75,14 @@
                 <li>Access only to Securities (ETF, etc.) with no historical data</li>
             </ul>
                 <a type="button" onclick="subscribe('price_1JuRoQB4k1y3jDV8rlxHuG8w','');" role="button" class="btn btn-lg btn-block btn-primary">Get started</a>
-              <!--
               {% if name == null or name == '' %}
                 <a type="button" href="/planoffering" role="button" class="btn btn-lg btn-block btn-primary">Sign up for free</a>
               {% else %}
                 <a type="button" href="/payment?payOption={{ product.id }}" role="button" class="btn btn-lg btn-block btn-primary">Get started</a>
               {% endif %}
-              -->
           </div>
         </div>
-
+        -->
         <div class="card mb-4 box-shadow">
           <div class="card-header">
             <h4 class="my-0 text-primary font-weight-normal">Enterprise</h4>

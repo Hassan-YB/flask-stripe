@@ -24,10 +24,8 @@ from flask_migrate import Migrate
 
 # ********** core app initialization **************
 app = Flask(__name__)
-#CSRFProtect(app)
 #connecting flask to dash
-#reporting= dash.Dash(__name__, server=app, url_base_pathname='/reporting')
-#
+
 app.config.from_object('config.Config') # loads in the current path from config.py the class Config
 
 #
@@ -62,7 +60,7 @@ jsonListOfPrices= stripe.Price.list(limit=100)
 #######################################################################
 for product in jsonListOfProducts['data']:
     for price in jsonListOfPrices['data']:
-        if price['product']==product['id'] and price['active']==True:
+        if price['product']==product['id'] and price['active']==True and product['active']==True:
             priceFullInfo= stripe.Price.retrieve(
               price['id'], 
               expand = ['tiers']#"price_1JIZeVG6509MXKUYT7G8V6UL",
@@ -72,8 +70,14 @@ for product in jsonListOfProducts['data']:
                     priceFlat= priceFullInfo.tiers[0]['flat_amount']/100
                     limitCallsPriceFlat= priceFullInfo.tiers[0]['up_to']
                     priceInc= priceFullInfo.tiers[1]['unit_amount']/100
-                    stripeListOfProductsAndPrices.append({'id': product['id'], 'name':product['name'], 'metadata': product['metadata'].to_dict(), 'price':priceFlat, 'incPrice':priceInc , 'limitCallsPriceFlat':limitCallsPriceFlat, 'currency':price['currency'] })
-            except: pass
+                    stripeListOfProductsAndPrices.append({'id': product['id'], 'name':product['name'], 'priceId': price['id'], 'billingScheme': price['billing_scheme'], 'metadata': product['metadata'].to_dict(), 'price':priceFlat, 'incPrice':priceInc , 'limitCallsPriceFlat':limitCallsPriceFlat, 'currency':price['currency'] })
+            except: 
+                try:
+                    priceFlat= priceFullInfo['unit_amount']/100
+                    limitCallsPriceFlat= product['metadata']['limitPerMonth']
+                    priceInc= 0
+                    stripeListOfProductsAndPrices.append({'id': product['id'], 'name':product['name'], 'priceId': price['id'], 'billingScheme': price['billing_scheme'], 'metadata': product['metadata'].to_dict(), 'price':priceFlat, 'incPrice':priceInc , 'limitCallsPriceFlat':limitCallsPriceFlat, 'currency':price['currency'] })
+                except: pass
         
 
 stripeListOfProductsAndPrices= sorted(stripeListOfProductsAndPrices, key=lambda i:i['price'])
@@ -101,7 +105,7 @@ logWebApp.info("Initizalized Limiter")
 # loading data into app context
 with app.app_context():
     #include routes definition
-    from application import webRoutes, stripeSubscriptions# ,login stripeRoutes,
+    from application import webRoutes, stripeSubscriptions, utilityRoutes# ,login stripeRoutes,
     from application import HTTPerrors#, apiRoutes
     
     

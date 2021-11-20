@@ -73,7 +73,11 @@ def planoffering():
     #if current_user.is_authenticated == True:
     #    return render_template ('pricing.html', name=current_user.username, profile=current_user.profile, stripeListOfProductsAndPrices= stripeListOfProductsAndPrices )
     #else:
+<<<<<<< HEAD
         return render_template ('pricing.html', name='', profile='')
+=======
+        return render_template ('pricing.html', name='', profile='', stripeListOfProductsAndPrices= stripeListOfProductsAndPrices)
+>>>>>>> 49072c28e7401d75610bdb15dd12903948d141bf
 
 #@t.include
 @app.route('/apidoc', methods = ['GET'])

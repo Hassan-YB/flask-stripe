@@ -3,10 +3,10 @@ import stripe
 from flask import  jsonify, render_template, request, session, flash
 from werkzeug.utils import redirect
 from application import app, csrf, dbSQL, migrate
-import json, os
+import json, os,time, uuid
 from datetime import datetime
-import time
-import uuid
+from utilityRoutes import currentUserInfo
+ 
 #DB_NAME = "StripeDatabase.db"
 #app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
 
@@ -237,10 +237,10 @@ def subscribe():
     if request.method == "GET":
         return render_template("Stripe-Plans.html",**context)
     else:
-        PlanID = request.form.get('sub-id')
+        priceID = request.form.get('sub-id')
         #replace following line as it's hard coded for now
         #PlanID = 'price_1JIZeVG6509MXKUYT7G8V6UL' #'prod_JwSZwGgM4dDlNK'
-        PlanName = request.form.get('plan-name')
+        planType = request.form.get('plan-name')
         #it is necessary for testing purposes
         #then should be removed as it will be retrieved with login information
         email = request.form.get('email') or None
@@ -254,22 +254,21 @@ def subscribe():
         else:
             print(GetCustomer)
         standard = []
-        if PlanName == "Standard":
+        #it references billing scheme
+        if planType == 'per_unit': #"Standard":
             print("standard plan")
             standard = [{
-                'price': PlanID,
+                'price': priceID,
+                'quantity': 1
+            }]
+        elif planType == 'tiered' : #graduated
+            print("Graduated plan")
+            standard = [{
+                'price': priceID,
                 'quantity': 1
             }]
         else:
-            print("Graduated plan")
-            standard = [{
-                'price': PlanID,
-                'quantity': 1
-            }]
-
-        standard = [{
-            'price': PlanID,
-        }]
+            return 
 
         session = stripe.checkout.Session.create(
             customer = GetCustomer.stripe_id,
@@ -289,7 +288,7 @@ def subscribe():
         print(session)
         AddSubscription = Subscriptions(
             email = email,
-            plan_id = PlanID
+            plan_id = priceID
         )
         print(AddSubscription)
         dbSQL.session.add(AddSubscription)
@@ -370,6 +369,14 @@ def user_dashboard():
             context = {}
             session['email'] = email
             context['subscription'] = Subscriptions.query.filter_by(email=email).first()
+            currentUserData= currentUserInfo
+            #pass to Stripe-Dashboard.html also currentUserData and display as meaningful info like:
+            # your apikey is ...
+            # your current plan is limited to:
+            #     daily calls = 
+            #     montly calls = 
+            # your current usage is :
+            # ...
             return render_template("Stripe-Dashboard.html",**context)
         else:
             flash('No email found!')
