@@ -26,16 +26,26 @@
                 <label for="Product" style="color:black">Email</label>
                 <input type="email" class="form-control" id="email" name="customer-email" placeholder="Enter your email" required>
             </div>
-            <div class="form-group">
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label text-dark" for="exampleCheck1">Add VAT (optional)</label>
+            </div>
+            <div class="form-group" id="tax-field">
                 <label for="Product" style="color:black">Tax Type</label>
                 <select class="form-control form-control-lg mb-3" name="tax-type">
                     <option selected value="0">Select tax type</option>
-                    <option value="ae_trn">ae_trn</option>
-                    <option value="au_abn">au_abn</option>
-                    <option value="au_arn">au_arn</option>
-                    <option value="br_cnpj">br_cnpj</option>
-                    <option value="br_cpf">br_cpf</option>
-                    <option value="eu_vat">eu_vat</option>
+                    <option value="ae_trn">United Arab Emirates</option>
+                    <option value="au_abn">Australia</option>
+                    <option value="eu_vat">European Union</option> <!-- Example RO1234567891 -->
+                    <option value="us_ein">United States</option>
+                    <option value="th_vat">Thailand</option>
+                    <option value="ch_vat">Switzerland</option>
+                    <option value="nz_gst">New Zealand</option>
+                    <option value="mx_rfc">Mexico</option>
+                    <option value="ca_bn">Canada</option>
+                    <option value="za_vat">South Africa</option>
+                    <option value="sg_gst">Singapore</option>
+                    <option value="ru_inn">Russian Federation</option>
                 </select>
                  <label for="Product" style="color:black">Tax Value</label>
                 <input type="text" class="form-control" id="tax-value" name="tax-value" placeholder="Enter tax value" required>
@@ -46,5 +56,15 @@
         </div>
     </div>
 </div>
-
+<script>
+    $("#tax-field").hide();
+    $("#exampleCheck1").change(function() {
+        if(this.checked) {
+            $("#tax-field").show();
+        }
+        else{
+            $("#tax-field").hide();
+        }
+    });
+</script>
 {% endblock %}

@@ -5,7 +5,7 @@ from werkzeug.utils import redirect
 from application import app, csrf, dbSQL, migrate
 import json, os,time, uuid
 from datetime import datetime
-from utilityRoutes import currentUserInfo
+from application.utilityRoutes import currentUserInfo
  
 #DB_NAME = "StripeDatabase.db"
 #app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
