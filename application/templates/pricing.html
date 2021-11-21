@@ -62,7 +62,7 @@
                         {% endif %}                
                   {% endfor %}
                 </ul>
-                    <a type="button" onclick="subscribe('{{ product.priceId }}','{{ product.billingScheme }}');" role="button" class="btn btn-lg btn-block btn-primary">Get started</a>
+                    <button type="button" onclick="subscribe('{{ product.priceId }}','{{ product.billingScheme }}');" class="btn btn-lg btn-block btn-primary">Get started</button>
                   <!--
                   {% if name == null or name == '' %}
                     <a type="button" href="/planoffering" role="button" class="btn btn-lg btn-block btn-primary">Sign up for free</a>
@@ -114,7 +114,15 @@
 
     </div>
 
-
+    <script>
+      function subscribe(id,name){
+          console.log(name);
+          $("#sub-id").val(id);
+          $("#plan-name").val(name);
+          $("#email").val($("#email1").val());
+          $("#subscription-form").submit()
+        };
+    </script>
     <script src="static/js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="static/js/jquery-3.2.1.slim.min.js"><\/script>')</script>
     <script type="text/javascript" src="static/js/holder.min.js"></script>
@@ -125,14 +133,6 @@
         text: 'Thumbnail'
       });
     </script>
-    <script>
-    function subscribe(id,name){
-        console.log(name);
-        $("#sub-id").val(id);
-        $("#plan-name").val(name);
-        $("#email").val($("#email1").val());
-        $("#subscription-form").submit()
-        }
-    </script>
+    
 
 {% endblock %}  

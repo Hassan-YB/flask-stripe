@@ -53,7 +53,10 @@ stripeListOfProductsAndPrices=[]
 
 jsonListOfProducts= stripe.Product.list(limit=100)        
 jsonListOfPrices= stripe.Price.list(limit=100)
-
+# print("products")
+# print(stripe.Product.list(limit=100))
+# print("Prices")
+# print(stripe.Price.list(limit=100))
 #######################################################################
 # stripe graduated prices, with flat subscription and soft limit      #
 # any additional call will be invoiced at the end of the month        #
@@ -61,10 +64,12 @@ jsonListOfPrices= stripe.Price.list(limit=100)
 for product in jsonListOfProducts['data']:
     for price in jsonListOfPrices['data']:
         if price['product']==product['id'] and price['active']==True and product['active']==True:
-            priceFullInfo= stripe.Price.retrieve(
+            priceFullInfo = stripe.Price.retrieve(
               price['id'], 
               expand = ['tiers']#"price_1JIZeVG6509MXKUYT7G8V6UL",
             )
+            print("info")
+            print(priceFullInfo)
             try:
                 if len(priceFullInfo.tiers) > 0:
                     priceFlat= priceFullInfo.tiers[0]['flat_amount']/100

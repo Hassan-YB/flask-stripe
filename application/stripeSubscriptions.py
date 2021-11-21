@@ -52,8 +52,9 @@ class Subscriptions(dbSQL.Model):
     id = dbSQL.Column(dbSQL.Integer(), primary_key=True)
     is_active = dbSQL.Column(dbSQL.Boolean, default=False)
     plan_id = dbSQL.Column(dbSQL.String(50),nullable=True)
-    created_at = dbSQL.Column(dbSQL.DateTime, nullable=False,default=datetime.utcnow)
-    updated_at = dbSQL.Column(dbSQL.String(50))
+    price_id = dbSQL.Column(dbSQL.String(50),nullable=True)
+    created_at = dbSQL.Column(dbSQL.String(50), nullable=True,default=datetime.utcnow)
+    end_at = dbSQL.Column(dbSQL.String(50))
     # membership = dbSQL.Column(dbSQL.Integer, dbSQL.ForeignKey('Paypal_plans.id'),nullable=True)
     username = dbSQL.Column(dbSQL.String(50),nullable=True)
     email = dbSQL.Column(dbSQL.String(50),nullable=True)
@@ -103,10 +104,14 @@ def webhook_received():
         if data_object['subscription'] and data_object["status"] == "paid":
             UpdateSubscription = Subscriptions.query.filter_by(email=data_object["customer_email"]).first()
             print(data_object['subscription'],data_object['lines']['data'][0]['period']['start'])
-            date = datetime.fromtimestamp(data_object['lines']['data'][0]['period']['start'])
+            Start_date = datetime.fromtimestamp(data_object['lines']['data'][0]['period']['start'])
+            End_date = datetime.fromtimestamp(data_object['lines']['data'][0]['period']['end'])
+            UpdateSubscription.price_id = data_object['lines']['data'][0]['price']['id']
+            UpdateSubscription.plan_id = data_object['lines']['data'][0]['price']['product']
             UpdateSubscription.stripe_subscription_id = data_object['subscription']
             UpdateSubscription.is_active = True
-            UpdateSubscription.updated_at = date
+            UpdateSubscription.created_at = Start_date
+            UpdateSubscription.end_at = End_date
             GetItemId = stripe.Subscription.retrieve(
                 data_object['subscription'],
             )
@@ -241,6 +246,7 @@ def subscribe():
         #replace following line as it's hard coded for now
         #PlanID = 'price_1JIZeVG6509MXKUYT7G8V6UL' #'prod_JwSZwGgM4dDlNK'
         planType = request.form.get('plan-name')
+        print(planType)
         #it is necessary for testing purposes
         #then should be removed as it will be retrieved with login information
         email = request.form.get('email') or None
@@ -265,7 +271,6 @@ def subscribe():
             print("Graduated plan")
             standard = [{
                 'price': priceID,
-                'quantity': 1
             }]
         else:
             return 
@@ -330,6 +335,7 @@ def create_customer():
                     email = email,
                     name = CustomerName
                 )
+                TaxResponse = None
                 if TaxType and TaxValue:
                     TaxResponse = stripe.Customer.create_tax_id(
                         response['id'],
@@ -368,8 +374,36 @@ def user_dashboard():
         if email:
             context = {}
             session['email'] = email
-            context['subscription'] = Subscriptions.query.filter_by(email=email).first()
+            GetSubscription = Subscriptions.query.filter_by(email=email).first()
+            context['subscription'] = GetSubscription
             currentUserData= currentUserInfo
+            Userdynamicinfo = {}
+            current_usage = 0
+            if GetSubscription.stripe_subscription_item_id:
+                response = stripe.SubscriptionItem.list_usage_record_summaries(
+                    f"{GetSubscription.stripe_subscription_item_id}"
+                )
+                current_usage = response['data'][0]['total_usage']
+            if GetSubscription.price_id:
+                Pricedata = stripe.Price.retrieve(
+                    f"{GetSubscription.price_id}",
+                    )
+                print("Price data")
+                print(Pricedata)
+                interval = Pricedata['recurring']['interval']
+            if GetSubscription.plan_id:
+                data = stripe.Product.retrieve(
+                    f"{GetSubscription.plan_id}",
+                    )
+                print("Plan data")
+                print(data)
+                if data:
+                    stat = True
+                limitperday = data['metadata']['LimitPerDay'] or None
+                LimitPerMonth = data['metadata']['LimitPerMonth'] or None
+                des1 = data['metadata']['des1'] or None
+                des2 = data['metadata']['des2'] or None
+                des3 = data['metadata']['des3'] or None  
             #pass to Stripe-Dashboard.html also currentUserData and display as meaningful info like:
             # your apikey is ...
             # your current plan is limited to:
@@ -377,7 +411,7 @@ def user_dashboard():
             #     montly calls = 
             # your current usage is :
             # ...
-            return render_template("Stripe-Dashboard.html",**context)
+            return render_template("Stripe-Dashboard.html",**context, usage = current_usage,statistics=stat,limitperday=limitperday,LimitPerMonth=LimitPerMonth,des1=des1,des2=des2,des3=des3,interval=interval)
         else:
             flash('No email found!')
             return redirect(url_for('user_dashboard'))

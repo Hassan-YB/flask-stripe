@@ -15,29 +15,52 @@
             {% endif %}
         {% endwith %}
         <h3 style="color:black" class="col-12 text-center p-3"> Subscription Plan </h3>
-        <div class="col-6">
-        <form id="product_form" class="pl-5 pr-5 pb-5 pt-0" action="{{ url_for('user_dashboard') }}" method="POST">
+        <div class="col-12">
+        <form id="product_form" class="pl-5 pr-5 pb-5 pt-0 " action="{{ url_for('user_dashboard') }}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" hidden>
-            <div class="form-group">
-                <label for="Product" style="color:black">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+            <div class="form-group d-flex justify-content-center">
+                <label for="Product" style="color:black" class="m-2">Email</label>
+                <input type="email" class="form-control col-6 " id="email" name="email" placeholder="Enter your email" required>
             </div>
+            <div class="d-flex flex-row">
             {% if subscription %}
-                <div class="card m-5" style="width: inherit;">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item text-dark"><strong>Active:</strong> {{subscription.is_active}}</li>
-                        <li class="list-group-item text-dark">{{subscription.plan_id}}</li>
-                        <li class="list-group-item text-dark">{{subscription.stripe_subscription_id}}</li>
-                        <li class="list-group-item text-dark">{{subscription.stripe_subscription_item_id}}</li>
-                        <li class="list-group-item text-dark">{{subscription.email}}</li>
-                        <li class="list-group-item text-dark">{{subscription.created_at}}</li>
-                        <li class="list-group-item bg-success"><a href="{{url_for('update_subscription')}}" class="btn btn-success btn-lg" >Update Subscription</a></li>
-                        <li class="list-group-item bg-danger"><a href="{{url_for('cancel_subscription')}}" class="btn btn-danger btn-lg" >Cancel Subscription</a></li>
-                    </ul>
-                </div>
+                {% if subscription.is_active %}
+                    <div class="card m-5 col-5 pr-0 pl-0 justify-content-lg-start" style="width: inherit;height:fit-content">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-white bg-success"><strong>Active:</strong> {{subscription.is_active}}</li>
+                            <li class="list-group-item text-dark">Current used units: <strong>{{usage}}</strong> </li>
+                            <li class="list-group-item text-dark">Interval: <strong style="text-transform: uppercase;">{{interval}}</strong> </li>
+                            <li class="list-group-item text-dark">Email: {{subscription.email}}</li>
+                            <li class="list-group-item text-dark">Start Datetime: <strong>{{subscription.created_at}}</strong></li>
+                            <li class="list-group-item text-dark">Next Payment: <strong>{{subscription.end_at}}</strong></li>
+                        </ul>
+                    </div>
+
+                {% else %}
+                <h4 class="text-danger p-5 d-flex justify-content-center">No active subscription!</h4>
+                {% endif %}
             {% endif %}
-            <button class="btn btn-primary btn-lg" style="float:left" type="submit">View Subscription</button>
-            <a href="/planoffering" class="btn btn-info btn-lg" style="float:right" type="submit">View Plans</a>
+            {% if statistics %}
+                <div class="card m-5 col-5 pr-0 pl-0 justify-content-end" style="width: inherit;height:fit-content">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-secondary text-white"><strong>Plan Statistics</strong></li>
+                            <li class="list-group-item text-dark">Limit per day: <strong>{{limitperday}}</strong> </li>
+                            <li class="list-group-item text-dark">Limit per month: <strong>{{LimitPerMonth}}</strong> </li>
+                            <li class="list-group-item text-dark">{{des1}}</li>
+                            <li class="list-group-item text-dark">{{des2}}</li>
+                            <li class="list-group-item text-dark">{{des3}}</li>
+                        </ul>
+                    </div>
+            {% endif %}
+            </div>
+
+            <div class="flex-row d-flex justify-content-center">
+                <button class="btn btn-primary btn-lg m-3" type="submit">View Subscription</button>
+                <a href="{{url_for('update_subscription')}}" class="btn btn-success btn-lg m-3" >Update Subscription</a>
+                <a href="{{url_for('cancel_subscription')}}" class="btn btn-danger btn-lg m-3" >Cancel Subscription</a>
+                <a href="/planoffering" class="btn btn-info btn-lg m-3" type="submit">View Plans</a>
+            </div>
+            
         </form> 
         </div>
     </div>
