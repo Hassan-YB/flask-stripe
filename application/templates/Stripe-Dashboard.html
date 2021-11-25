@@ -14,7 +14,7 @@
               </div>
             {% endif %}
         {% endwith %}
-        <h3 style="color:black" class="col-12 text-center p-3"> Subscription Plan </h3>
+        <h3 style="color:black" class="col-12 text-center p-3"> User Dashboard </h3>
         <div class="col-12">
         <form id="product_form" class="pl-5 pr-5 pb-5 pt-0 " action="{{ url_for('user_dashboard') }}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" hidden>

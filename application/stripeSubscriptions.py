@@ -289,6 +289,7 @@ def subscribe():
                 'name': 'auto',
                 'address': 'auto',
             },
+            billing_address_collection = 'required'
         )
         print(session)
         AddSubscription = Subscriptions(
