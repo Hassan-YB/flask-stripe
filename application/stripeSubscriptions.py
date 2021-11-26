@@ -5,7 +5,7 @@ from werkzeug.utils import redirect
 from application import app, csrf, dbSQL, migrate
 import json, os,time, uuid
 from datetime import datetime
-from utilityRoutes import currentUserInfo
+from application.utilityRoutes import currentUserInfo, stripeGetCustomerId, customerPlanInfo
  
 #DB_NAME = "StripeDatabase.db"
 #app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
@@ -52,8 +52,9 @@ class Subscriptions(dbSQL.Model):
     id = dbSQL.Column(dbSQL.Integer(), primary_key=True)
     is_active = dbSQL.Column(dbSQL.Boolean, default=False)
     plan_id = dbSQL.Column(dbSQL.String(50),nullable=True)
-    created_at = dbSQL.Column(dbSQL.DateTime, nullable=False,default=datetime.utcnow)
-    updated_at = dbSQL.Column(dbSQL.String(50))
+    price_id = dbSQL.Column(dbSQL.String(50),nullable=True)
+    created_at = dbSQL.Column(dbSQL.String(50), nullable=True,default=datetime.utcnow)
+    end_at = dbSQL.Column(dbSQL.String(50))
     # membership = dbSQL.Column(dbSQL.Integer, dbSQL.ForeignKey('Paypal_plans.id'),nullable=True)
     username = dbSQL.Column(dbSQL.String(50),nullable=True)
     email = dbSQL.Column(dbSQL.String(50),nullable=True)
@@ -103,10 +104,14 @@ def webhook_received():
         if data_object['subscription'] and data_object["status"] == "paid":
             UpdateSubscription = Subscriptions.query.filter_by(email=data_object["customer_email"]).first()
             print(data_object['subscription'],data_object['lines']['data'][0]['period']['start'])
-            date = datetime.fromtimestamp(data_object['lines']['data'][0]['period']['start'])
+            Start_date = datetime.fromtimestamp(data_object['lines']['data'][0]['period']['start'])
+            End_date = datetime.fromtimestamp(data_object['lines']['data'][0]['period']['end'])
+            UpdateSubscription.price_id = data_object['lines']['data'][0]['price']['id']
+            UpdateSubscription.plan_id = data_object['lines']['data'][0]['price']['product']
             UpdateSubscription.stripe_subscription_id = data_object['subscription']
             UpdateSubscription.is_active = True
-            UpdateSubscription.updated_at = date
+            UpdateSubscription.created_at = Start_date
+            UpdateSubscription.end_at = End_date
             GetItemId = stripe.Subscription.retrieve(
                 data_object['subscription'],
             )
@@ -241,18 +246,21 @@ def subscribe():
         #replace following line as it's hard coded for now
         #PlanID = 'price_1JIZeVG6509MXKUYT7G8V6UL' #'prod_JwSZwGgM4dDlNK'
         planType = request.form.get('plan-name')
+        print(planType)
         #it is necessary for testing purposes
         #then should be removed as it will be retrieved with login information
         email = request.form.get('email') or None
-        GetCustomer = Customer.query.filter_by(email=email).first()
+
+        #GetCustomer = Customer.query.filter_by(email=email).first()
+        customerId= stripeGetCustomerId(email)
         if not email:
             flash("Email missing!")
             return redirect(url_for('planoffering'))
-        if not GetCustomer:
+        if not customerId:
             flash("No customer with that email exists! Kindly register first.")
             return redirect(url_for('planoffering'))
         else:
-            print(GetCustomer)
+            print(customerId)
         standard = []
         #it references billing scheme
         if planType == 'per_unit': #"Standard":
@@ -271,7 +279,7 @@ def subscribe():
             return 
 
         session = stripe.checkout.Session.create(
-            customer = GetCustomer.stripe_id,
+            customer = customerId,
             success_url = app.config['STRIPE_URL'] + 'success?session_id={CHECKOUT_SESSION_ID}',
             cancel_url = app.config['STRIPE_URL'] + 'cancel',
             payment_method_types = ['card'],
@@ -330,6 +338,7 @@ def create_customer():
                     email = email,
                     name = CustomerName
                 )
+                TaxResponse = None
                 if TaxType and TaxValue:
                     TaxResponse = stripe.Customer.create_tax_id(
                         response['id'],
@@ -366,10 +375,32 @@ def user_dashboard():
         email = request.form.get('email') or None
         print(email)
         if email:
-            context = {}
             session['email'] = email
-            context['subscription'] = Subscriptions.query.filter_by(email=email).first()
-            currentUserData= currentUserInfo
+            
+            Userdynamicinfo= customerPlanInfo(email)
+            
+            currentUserData= currentUserInfo()
+            
+            current_usage = 0
+            if Userdynamicinfo['subscriptionItemId'] and Userdynamicinfo['pricing'] == 'graduated':
+                response = stripe.SubscriptionItem.list_usage_record_summaries(Userdynamicinfo['subscriptionId'])
+                current_usage = response['data'][0]['total_usage']
+            if Userdynamicinfo['priceId']:
+                Pricedata = stripe.Price.retrieve(Userdynamicinfo['priceId'])
+                print("Price data")
+                print(Pricedata)
+                interval = Pricedata['recurring']['interval']
+            if Userdynamicinfo['planId']:
+                data = stripe.Product.retrieve(Userdynamicinfo['planId'])
+                print("Plan data")
+                print(data)
+                if data:
+                    stat = True
+                limitperday = data['metadata']['limitPerDay'] or None
+                LimitPerMonth = data['metadata']['limitPerMonth'] or None
+                des1 = data['metadata']['des1'] or None
+                des2 = data['metadata']['des2'] or None
+                des3 = data['metadata']['des3'] or None  
             #pass to Stripe-Dashboard.html also currentUserData and display as meaningful info like:
             # your apikey is ...
             # your current plan is limited to:
@@ -377,7 +408,7 @@ def user_dashboard():
             #     montly calls = 
             # your current usage is :
             # ...
-            return render_template("Stripe-Dashboard.html",**context)
+            return render_template("Stripe-Dashboard.html",**Userdynamicinfo, usage = current_usage,statistics=stat,limitperday=limitperday,LimitPerMonth=LimitPerMonth,des1=des1,des2=des2,des3=des3,interval=interval)
         else:
             flash('No email found!')
             return redirect(url_for('user_dashboard'))
@@ -386,19 +417,24 @@ def user_dashboard():
 
 @app.route("/update-subscription", methods=["POST","GET"])
 def update_subscription():
+    email = request.form.get('email') or None
+    # For Hassan, please retrieve priceid from the webpage
+    # line 423 should be replaced by something you retrieve from the webpage
+    priceId= request.form.get('priceId') or None
     if 'email' in session:
         print(session['email'])
         email = session['email']
-        GetSubscription = Subscriptions.query.filter_by(email=email).first()
-        if GetSubscription.is_active:
-            subscription = stripe.Subscription.retrieve(GetSubscription.stripe_subscription_id)
+        #GetSubscription = Subscriptions.query.filter_by(email=email).first()
+        customerSubscription= customerPlanInfo(email)
+        if customerSubscription['isActive']:
+            subscription = stripe.Subscription.retrieve(customerSubscription['subscriptionId'])
             response = stripe.Subscription.modify(
                 subscription.id,
                 cancel_at_period_end=False,
                 proration_behavior='always_invoice', #Use this to get payment at the end 'create_prorations'
                 items=[{
                     'id': subscription['items']['data'][0].id,
-                    'price': 'price_1JuQJqB4k1y3jDV8dgWgFE3A', #hard-coded price id for now
+                    'price': priceId #'price_1JuQJqB4k1y3jDV8dgWgFE3A', #hard-coded price id for now
                 }]
             )
             print(response)
@@ -416,14 +452,17 @@ def update_subscription():
 def cancel_subscription():
     if 'email' in session:
         print(session['email'])
-        response = Subscriptions.query.filter_by(email=session['email']).first()
-        if response.is_active:
+        email= session['email']
+        #response = Subscriptions.query.filter_by(email=session['email']).first()
+        customerSubscription= customerPlanInfo(email)
+        if customerSubscription['isActive']:
             stripe.Subscription.delete(
-                response.stripe_subscription_id,
+                customerSubscription['subscriptionId'],
             )
-            print(response)
-            response.is_active = False
-            dbSQL.session.add(response)
+            print(customerSubscription)
+            #response.is_active = False
+            #For Hassan is there any way to delete customer entry from local DB??
+            dbSQL.session.delete(email=session['email']) # ????????????
             dbSQL.session.commit()
             flash("Subscription canceled!")
             return redirect(url_for('user_dashboard'))
@@ -456,13 +495,18 @@ def report_usage():
             flash('No email and units found!')
             return redirect(url_for('report_usage'))
         
-        response = Subscriptions.query.filter_by(email=email).first()
+        stripe.Customer.list(limit=3)        
+        
+        customerSubscription= customerPlanInfo(email)
+        
+        #response = Subscriptions.query.filter_by(email=email).first()
 
-        if not response.is_active:
+        if not customerSubscription['isActive']:
             flash('No active subscription!')
             return redirect(url_for('report_usage'))
-
-        subscription_item_id = response.stripe_subscription_item_id
+        
+        
+        subscription_item_id = customerSubscription['subscriptionId']#response.stripe_subscription_item_id
 
         # The usage number you've been keeping track of in your database for
         # the last 24 hours.
